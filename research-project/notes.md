@@ -139,16 +139,6 @@ Explore these benchmarks for further insights into OpenMP's capabilities and per
 - **HYDRO HydroC/HydroCplusMPI**: A hydrodynamics benchmark suite that supports MPI. [GitHub Repository](https://github.com/HydroBench/Hydro)
 - **NOT** Dense Matrix QR Factorization: Suggested by Marcelo Miletto, this benchmark focuses on the QR factorization of dense matrices, highlighting computational challenges and performance opportunities.
 
-# Example #3 - Matrix Multiplication
-
-This example showcases block-wise matrix multiplication, a technique that can significantly improve performance on modern hardware by better utilizing cache memory.
-
-Matrices are square (NxN elements), and multiplication is performed on square blocks (BSxBS elements), optimizing memory access patterns and computational efficiency.
-
-This example illustrates block-wise matrix multiplication, a technique that optimizes computational efficiency and memory access patterns by operating on square blocks of a matrix. The matrices involved are square, with NxN elements, and the multiplication is performed on square blocks of BSxBS elements.
-
-The following OpenMP code snippet demonstrates how to apply parallel processing to this matrix multiplication, utilizing task dependencies to manage the computation flow and ensure correct execution order.
-
 ```c
 #pragma omp parallel
 #pragma omp single
@@ -179,3 +169,48 @@ The following OpenMP code snippet demonstrates how to apply parallel processing 
   }
 }
 ```
+
+# Example #3 - Matrix Multiplication
+
+This example showcases block-wise matrix multiplication, a technique that can significantly improve performance on modern hardware by better utilizing cache memory.
+
+Matrices are square (NxN elements), and multiplication is performed on square blocks (BSxBS elements), optimizing memory access patterns and computational efficiency.
+
+This example illustrates block-wise matrix multiplication, a technique that optimizes computational efficiency and memory access patterns by operating on square blocks of a matrix. The matrices involved are square, with NxN elements, and the multiplication is performed on square blocks of BSxBS elements.
+
+The following OpenMP code snippet demonstrates how to apply parallel processing to this matrix multiplication, utilizing task dependencies to manage the computation flow and ensure correct execution order.
+
+```c
+// We assume BS divides N perfectly
+void matmul_depend(int N, int BS, float A[N][N], float B[N][N], float C[N][N]) {
+  int i, j, k, ii, jj, kk;
+  for (i = 0; i < N; i+=BS) {
+    for (j = 0; j < N; j+=BS) {
+      for (k = 0; k < N; k+=BS) {
+        // Note 1: i, j, k, A, B, C are firstprivate by default
+        // Note 2: A, B, and C are just pointers
+        #pragma omp task private(ii, jj, kk) \
+                depend(in: A[i:BS][k:BS], B[k:BS][j:BS]) \
+                depend(inout: C[i:BS][j:BS])
+        for (ii = i; ii < i+BS; ii++)
+          for (jj = j; jj < j+BS; jj++)
+            for (kk = k; kk < k+BS; kk++)
+              C[ii][jj] = C[ii][jj] + A[ii][kk] * B[kk][jj];
+      }
+    }
+  }
+}
+```
+
+## Learning Resources (For Study) from the ERAD/RS Minicourse
+
+- [ERAD/RS Minicourse Material](https://sol.sbc.org.br/livros/index.php/sbc/catalog/view/61/269/524-1)
+  - **Merge-Sort**
+  - **Gauss-Seidel Smoothing**
+    - [Gauss-Seidel Implementation](https://gitlab.com/lnesi/companion-minicurso-openmp-tasks/-/blob/master/codigos/OMPT/Gauss-Seidel.c)
+  - **Cholesky Factorization**
+
+## BOTS (Only task and taskwait)
+
+- [BOTS GitHub Repository](https://github.com/bsc-pm/bots)
+
