@@ -50,6 +50,9 @@
 		para a obten{\c{c}}{\~a}o do grau de
 		Mestre em \titulacaoEm
 	}%
+	\def\rproject{%
+		Proposta para o projeto de pesquisa
+	}%
 	\def\tesename{Tese (doutorado)}%
 	\def\tesespecificinfo{%
 		Tese apresentada como requisito parcial

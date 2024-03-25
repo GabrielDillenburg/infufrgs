@@ -11,5 +11,6 @@
 % and redistributing these files
 %
 \ProvidesFile{diss.def}[2003/02/03 Dissertação de Mestrado]
-\newcommand{\titlepagespecificinfo}{\dissspecificinfo}
+\newcommand{\titlepagespecificinfo}{\rproject}
+
 \def\@cipspecificinfo{\dissname}
