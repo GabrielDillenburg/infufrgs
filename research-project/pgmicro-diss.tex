@@ -223,7 +223,7 @@ No âmbito da Computação de Alto Desempenho (HPC), a utilização do OpenMP pa
 
 Ademais, a pesquisa apresentada em "Otimizações Poliédricas de Programas Paralelos Explícitos" por \citen{Chatarasi2015Polyhedral} introduz uma abordagem inovadora para a otimização de programas paralelos, incluindo aqueles desenvolvidos com OpenMP. Ao integrar modelos poliédricos, eles demonstram caminhos potenciais para alcançar níveis mais altos de eficiência computacional e escalabilidade, aspectos cruciais das simulações HPC.
 
-Além disso, a ferramenta "ompTG: De Programas OpenMP para Grafos de Tarefas", desenvolvida por \citen{Sun2022ompTG}, representa um avanço significativo para preencher a lacuna entre a pesquisa teórica de agendamento e o desenvolvimento prático de software OpenMP. Esta ferramenta facilita a transformação de programas OpenMP em grafos de tarefas, oferecendo uma visão mais detalhada das dependências de tarefas e estruturas de controle de fluxo. Tal perspectiva é inestimável para a avaliação e otimização de algoritmos de agendamento em tempo real em aplicações HPC.
+Além disso, a ferramenta "ompTG: De Programas OpenMP para Grafos de Tarefas", desenvolvida por \citen{Sun2022ompTG}, representa um avanço significativo para preencher a lacuna entre a pesquisa teórica e o desenvolvimento prático de software OpenMP. Esta ferramenta facilita a transformação de programas OpenMP em grafos de tarefas, oferecendo uma visão mais detalhada das dependências de tarefas e estruturas de controle de fluxo. Tal perspectiva é inestimável para a avaliação e otimização de algoritmos de agendamento em tempo real em aplicações HPC.
 
 Esses estudos, coletivamente, enriquecem nossa compreensão dos desafios e oportunidades na otimização de aplicações OpenMP para ambientes HPC. Eles não apenas destacam os avanços no paralelismo e sincronização de tarefas, mas também oferecem ferramentas e metodologias práticas para melhorar o desempenho de simulações HPC. Nossa pesquisa visa construir sobre essas bases, explorando novas vias para a otimização de simulações HPC baseadas em OpenMP.
 
@@ -231,13 +231,13 @@ Esses estudos, coletivamente, enriquecem nossa compreensão dos desafios e oport
 
 \section{Metodologia}
 
-Na metodologia proposta para o estudo do rastreamento de aplicações paralelas utilizando OpenMP, nossa investigação focará na eficiência e na granularidade das tarefas em ambientes de Computação de Alto Desempenho (HPC) através de uma abordagem integrada. Esta abordagem combina a análise de benchmarks específicos e a avaliação detalhada do desempenho sob diversas configurações de hardware. A seleção dos benchmarks para este estudo incluirá os recomendados por KALEMKAR et al. (2015), que evidenciam a importância de utilizar benchmarks representativos para avaliar o desempenho de aplicações HPC.
-Para a execução dos experimentos, utilizaremos um ambiente de Computação de Alto Desempenho conforme descrito por MÜLLER et al. (2017), que fornece uma ampla gama de configurações de núcleos e capacidades de processamento. A seleção das máquinas para este estudo, variando de 16 a 54 núcleos, permite uma análise comparativa do desempenho das aplicações sob diferentes cargas de trabalho. Esta seleção é apoiada pela pesquisa de LAURENT et al. (2013), que destaca a relevância de avaliar o desempenho de aplicações em HPC em diversas configurações de hardware.
+Na metodologia proposta para o estudo do rastreamento de aplicações paralelas utilizando OpenMP, nossa investigação focará na eficiência e na granularidade das tarefas em ambientes de Computação de Alto Desempenho (HPC) através de uma abordagem integrada. Esta abordagem combina a análise de benchmarks específicos e a avaliação detalhada do desempenho sob diversas configurações de hardware. A seleção dos benchmarks para este estudo incluirá os recomendados por \citet{Virouleau2014Evaluation}, que evidenciam a importância de utilizar benchmarks representativos para avaliar o desempenho de aplicações HPC.
+Para a execução dos experimentos, utilizaremos um ambiente de Computação de Alto Desempenho que fornece uma ampla gama de configurações de núcleos e capacidades de processamento. A seleção das máquinas para este estudo, variando de 16 a 44 núcleos, permite uma análise comparativa do desempenho das aplicações sob diferentes cargas de trabalho. Esta seleção é apoiada pela pesquisa de \citet{Schmidl2013Assessing}, que destaca a relevância de avaliar o desempenho de aplicações em HPC em diversas configurações de hardware.
 
 \todo[inline]{To do: validar sobre os compiladores}
 A configuração de software para a coleta de dados utilizará a versão mais atual do compilador GCC com suporte ao OpenMP, assegurando a disponibilidade das funcionalidades mais recentes do OMPT para o rastreamento, conforme recomendado por \citet{Dagum1998OpenMP}. Este aspecto é crucial para a coleta de dados eficaz, como ilustrado pelo trabalho de \citet{Geimer2010SCALASCA}, que enfatiza os avanços nas ferramentas de rastreamento para facilitar a análise detalhada do comportamento das tarefas em execução.
 
-
+\todo[inline]{To do: validar se vamos utilizar mais de um benchmark suite-> complexidade}
 Nosso design experimental focará em testes específicos para cada benchmark, incluindo análises de tempo de execução, visualizações de gráficos de tarefas e estatísticas detalhadas do desempenho das tarefas ao longo do tempo. Este plano é inspirado na abordagem sugerida por \citet{Chapman2007UsingOpenMP}, demonstrando como uma análise meticulosa do comportamento das tarefas pode revelar insights valiosos para a otimização de aplicações paralelas.
 
 \todo[inline]{To do: avaliar se neste momento já é necessário comentar sobre ferramentas de visualização de dados}
@@ -280,17 +280,11 @@ No contexto do Parque Computacional de Alto Desempenho (PCAD) \citep{PCAD2023}, 
 Cada uma destas plataformas foi selecionada com o propósito de abordar diferentes aspectos e desafios no campo da computação de alto desempenho. A seleção abrange desde configurações com maior número de núcleos, propícias para aplicações altamente paralelizáveis, até opções que oferecem um equilíbrio entre desempenho e consumo energético. Esta diversidade permite não apenas a execução eficiente de uma ampla gama de simulações, mas também facilita uma análise comparativa detalhada sobre como diferentes configurações de hardware influenciam o desempenho de aplicações paralelas.
 
 Através da execução de simulações nestas plataformas específicas, é possível extrair insights valiosos sobre a escalabilidade, eficiência e adaptabilidade de diferentes abordagens de paralelização frente aos desafios computacionais em HPC.
-
 \subsection{Configuração de software}
 \todo[inline]{To do: validar sobre os compiladores}
-
-
-
-
 % Esta seção faz referência às Figuras~\ref{fig:estrutura},~\ref{fig:ex1} e~\ref{fig:ex2}, a título de exemplo. A primeira figura apresenta a estrutura de uma figura. A \emph{descrição} deve aparecer \textbf{acima} da figura. Abaixo da figura, deve ser indicado a origem da imagem, mesmo se essa for apenas os autores do texto.
 
 % A Figura~\ref{fig:ex1} representa o caso mais comum, onde a figura propriamente dita é importada de um arquivo (neste exemplo em formato \texttt{eps} ou \texttt{pdf}. Veja a seção \ref{sec:fig_format}). A Figura~\ref{fig:ex2} exemplifica o uso do environment \texttt{picture}, para desenhar usando o próprio~\LaTeX.
-
 % \begin{figure}[h]
 %     \caption{Descrição da Figura deve ir no topo}
 %     \begin{center}
@@ -308,14 +302,12 @@ Através da execução de simulações nestas plataformas específicas, é poss�
 %     \label{fig:estrutura}
 %     \legend{Fonte: Os Autores}
 % \end{figure}
-
 % \begin{figure}
 %     \caption{Exemplo de figura importada de um arquivo e também exemplo de caption muito grande que ocupa mais de uma linha na Lista~de~Figuras}
 %     \centerline{\includegraphics[width=8em]{fig}}
 %     \legend{Fonte: Os Autores}
 %     \label{fig:ex1}
 % \end{figure}
-
 % o `[h]' abaixo é um parâmetro opcional que sugere que o LaTeX coloque a
 % figura exatamente neste ponto do texto. Somente preocupe-se com esse tipo
 % de formatação quando o texto estiver completamente pronto (uma frase a mais
@@ -337,7 +329,6 @@ Através da execução de simulações nestas plataformas específicas, é poss�
 %     \legend{Fonte: Os Autores}
 %     \label{fig:ex2}
 % \end{figure}
-
 \subsection{Cronograma do Projeto de Pesquisa}
 
 O sucesso na execução de aplicações paralelas em ambientes de Alto Desempenho Computacional (HPC) depende de um conhecimento profundo das tecnologias e ferramentas envolvidas, aliado a uma metodologia rigorosa para testar, avaliar e otimizar tais aplicações. Nesse contexto, a definição de um cronograma de atividades é fundamental para o gerenciamento e a execução sistemática do projeto.
